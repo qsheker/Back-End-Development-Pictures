@@ -1,71 +1,83 @@
-from . import app
-import os
+"""Picture REST API. The course stores pictures in a process-local list."""
 import json
-from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
+from pathlib import Path
+from threading import RLock
+from urllib.parse import urlparse
 
-SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-json_url = os.path.join(SITE_ROOT, "data", "pictures.json")
-data: list = json.load(open(json_url))
+from flask import abort, jsonify, request
+from . import app
 
-######################################################################
-# RETURN HEALTH OF THE APP
-######################################################################
+with (Path(__file__).parent / 'data' / 'pictures.json').open() as source:
+    data = json.load(source)
+lock = RLock()
 
 
-@app.route("/health")
+def picture_payload(expected_id=None):
+    value = request.get_json()
+    fields = ('pic_url', 'event_country', 'event_state', 'event_city', 'event_date')
+    if not isinstance(value, dict) or type(value.get('id')) is not int or value['id'] < 1:
+        abort(400, description='id must be a positive integer')
+    if any(not isinstance(value.get(field), str) or not value[field].strip() for field in fields):
+        abort(400, description='All picture fields must be nonempty strings')
+    if urlparse(value['pic_url']).scheme not in ('http', 'https'):
+        abort(400, description='pic_url must be an HTTP or HTTPS URL')
+    if expected_id is not None and value['id'] != expected_id:
+        abort(400, description='Body id must match the URL id')
+    return {key: value[key] for key in ('id', *fields)}
+
+
+@app.route('/health')
 def health():
-    return jsonify(dict(status="OK")), 200
-
-######################################################################
-# COUNT THE NUMBER OF PICTURES
-######################################################################
+    return jsonify(status='OK'), 200
 
 
-@app.route("/count")
+@app.route('/count')
 def count():
-    """return length of data"""
-    if data:
+    with lock:
         return jsonify(length=len(data)), 200
 
-    return {"message": "Internal server error"}, 500
 
-
-######################################################################
-# GET ALL PICTURES
-######################################################################
-@app.route("/picture", methods=["GET"])
+@app.route('/picture', methods=['GET'])
 def get_pictures():
-    pass
-
-######################################################################
-# GET A PICTURE
-######################################################################
+    with lock:
+        return jsonify(data), 200
 
 
-@app.route("/picture/<int:id>", methods=["GET"])
+@app.route('/picture/<int:id>', methods=['GET'])
 def get_picture_by_id(id):
-    pass
+    with lock:
+        for picture in data:
+            if picture['id'] == id:
+                return jsonify(picture), 200
+    return {'message': 'picture not found'}, 404
 
 
-######################################################################
-# CREATE A PICTURE
-######################################################################
-@app.route("/picture", methods=["POST"])
+@app.route('/picture', methods=['POST'])
 def create_picture():
-    pass
+    picture = picture_payload()
+    with lock:
+        if any(item['id'] == picture['id'] for item in data):
+            return {'Message': f"picture with id {picture['id']} already present"}, 302
+        data.append(picture)
+    return jsonify(picture), 201
 
-######################################################################
-# UPDATE A PICTURE
-######################################################################
 
-
-@app.route("/picture/<int:id>", methods=["PUT"])
+@app.route('/picture/<int:id>', methods=['PUT'])
 def update_picture(id):
-    pass
+    picture = picture_payload(id)
+    with lock:
+        for index, item in enumerate(data):
+            if item['id'] == id:
+                data[index] = picture
+                return jsonify(picture), 200
+    return {'message': 'picture not found'}, 404
 
-######################################################################
-# DELETE A PICTURE
-######################################################################
-@app.route("/picture/<int:id>", methods=["DELETE"])
+
+@app.route('/picture/<int:id>', methods=['DELETE'])
 def delete_picture(id):
-    pass
+    with lock:
+        for index, item in enumerate(data):
+            if item['id'] == id:
+                del data[index]
+                return '', 204
+    return {'message': 'picture not found'}, 404
