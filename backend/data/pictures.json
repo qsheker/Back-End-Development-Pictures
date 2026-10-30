@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "pic_url": "http://dummyimage.com/136x100.png/5fa2dd/ffffff",
+        "pic_url": "https://dummyimage.com/136x100.png/5fa2dd/ffffff",
         "event_country": "United States",
         "event_state": "District of Columbia",
         "event_city": "Washington",
@@ -9,7 +9,7 @@
     },
     {
         "id": 2,
-        "pic_url": "http://dummyimage.com/230x100.png/dddddd/000000",
+        "pic_url": "https://dummyimage.com/230x100.png/dddddd/000000",
         "event_country": "United States",
         "event_state": "Florida",
         "event_city": "Naples",
@@ -17,7 +17,7 @@
     },
     {
         "id": 3,
-        "pic_url": "http://dummyimage.com/123x100.png/5fa2dd/ffffff",
+        "pic_url": "https://dummyimage.com/123x100.png/5fa2dd/ffffff",
         "event_country": "United States",
         "event_state": "Ohio",
         "event_city": "Youngstown",
@@ -25,7 +25,7 @@
     },
     {
         "id": 4,
-        "pic_url": "http://dummyimage.com/175x100.png/dddddd/000000",
+        "pic_url": "https://dummyimage.com/175x100.png/dddddd/000000",
         "event_country": "United States",
         "event_state": "California",
         "event_city": "Anaheim",
@@ -33,7 +33,7 @@
     },
     {
         "id": 5,
-        "pic_url": "http://dummyimage.com/167x100.png/ff4444/ffffff",
+        "pic_url": "https://dummyimage.com/167x100.png/ff4444/ffffff",
         "event_country": "United States",
         "event_state": "New Jersey",
         "event_city": "Newark",
@@ -41,7 +41,7 @@
     },
     {
         "id": 6,
-        "pic_url": "http://dummyimage.com/232x100.png/5fa2dd/ffffff",
+        "pic_url": "https://dummyimage.com/232x100.png/5fa2dd/ffffff",
         "event_country": "United States",
         "event_state": "North Carolina",
         "event_city": "Charlotte",
@@ -49,7 +49,7 @@
     },
     {
         "id": 7,
-        "pic_url": "http://dummyimage.com/237x100.png/ff4444/ffffff",
+        "pic_url": "https://dummyimage.com/237x100.png/ff4444/ffffff",
         "event_country": "United States",
         "event_state": "Texas",
         "event_city": "San Antonio",
@@ -57,7 +57,7 @@
     },
     {
         "id": 8,
-        "pic_url": "http://dummyimage.com/152x100.png/cc0000/ffffff",
+        "pic_url": "https://dummyimage.com/152x100.png/cc0000/ffffff",
         "event_country": "United States",
         "event_state": "Florida",
         "event_city": "Orlando",
@@ -65,7 +65,7 @@
     },
     {
         "id": 9,
-        "pic_url": "http://dummyimage.com/188x100.png/ff4444/ffffff",
+        "pic_url": "https://dummyimage.com/188x100.png/ff4444/ffffff",
         "event_country": "United States",
         "event_state": "California",
         "event_city": "Los Angeles",
@@ -73,7 +73,7 @@
     },
     {
         "id": 10,
-        "pic_url": "http://dummyimage.com/187x100.png/5fa2dd/ffffff",
+        "pic_url": "https://dummyimage.com/187x100.png/5fa2dd/ffffff",
         "event_country": "United States",
         "event_state": "Florida",
         "event_city": "Miami Beach",
