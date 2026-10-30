@@ -28,3 +28,9 @@ The course uses an in-memory list seeded from `backend/data/pictures.json`; chan
 `docker run --rm -p 3000:3000 pictures`
 
 The container uses Gunicorn on port 3000 and runs as an unprivileged user. Deploy to the course-provided IBM Code Engine project.
+
+## Setup verification
+
+This repository was created from the [official course template](https://github.com/ibm-developer-skills-network/luggb-Back-End-Development-Pictures). On 2026-10-30, `bash bin/setup.sh` completed successfully (exit status 0) with Python 3.12, installed all requirements, and produced the activation instructions for `.venv`.
+
+The original course lab refers to Python 3.9 and a named virtual environment. This implementation uses Python 3.10+ and the repository-local `.venv` to support its current Flask dependencies; the deployed container uses Python 3.11.
